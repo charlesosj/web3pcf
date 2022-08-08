@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="block" constructor="blockTest" version="0.0.1" display-name-key="blockTest" description-key="blockTest description" control-type="standard" preview-image="img/preview.png">
+    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/blockTest.css" order="1" />
+      <resx path="strings/blockTest.1033.resx" version="1.0.0" />
+    </resources>
+  </control>
+</manifest>
