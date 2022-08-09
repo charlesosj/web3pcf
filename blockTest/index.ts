@@ -1,5 +1,12 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
+import { useQuery } from "react-query";
+import { ethers } from "ethers";
 
+declare var window: any
+const ethereum  = window.ethereum;
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import MyReactComponent from "./components/MyReactComponent";
 export class blockTest implements ComponentFramework.StandardControl<IInputs, IOutputs> {
     private _value: number;
     private _notifyOutputChanged: () => void;
@@ -8,6 +15,7 @@ export class blockTest implements ComponentFramework.StandardControl<IInputs, IO
     private _container: HTMLDivElement;
     private _context: ComponentFramework.Context<IInputs>;
     private _refreshData: EventListenerOrEventListenerObject
+    private contractAddress = "0x8841d425ad9a760062D93e45daff67288934a62a";
     /**
      * Empty constructor.
      */
@@ -26,19 +34,45 @@ export class blockTest implements ComponentFramework.StandardControl<IInputs, IO
      */
     public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement): void
     {
-        this._context = context;
-      this._container = document.createElement("div");
-      this._notifyOutputChanged = notifyOutputChanged;
+       // this._context = context;
+      //this._container = document.createElement("div");
+      //this._notifyOutputChanged = notifyOutputChanged;
+      this._container = container;
+    // this.buttonElement = document.createElement("button");
+    // this.buttonElement.innerText = "Click Me";
+    // this.buttonElement.addEventListener("click", this.onButtonClick.bind(this));
+    // this._container.appendChild(this.buttonElement);
 
-    this.buttonElement = document.createElement("button");
-    this.buttonElement.innerText = "Click Me";
-    this.buttonElement.addEventListener("click", this.onButtonClick.bind(this));
-    this._container.appendChild(this.buttonElement);
-
-      container.appendChild(this._container);
+    //   container.appendChild(this._container);
    
     }
+    
+   private async  onButtonClick(e) {
 
+    console.log("onButtonClick");
+    try{
+
+     //   const accounts = await ethereum.request({ method: "eth_accounts" });
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        console.log(provider);
+
+        const signer = provider.getSigner();
+        console.log(signer);
+
+        const accounts = await provider.send("eth_requestAccounts", []);
+        console.log(accounts);
+
+     
+    // const wavePortalContract = new ethers.Contract(this.contractAddress, abi.abi,signer)
+    // const  count = await wavePortalContract.getTotalWaves();
+    //     console.log("Retrieved total wave count...", count.toNumber());
+    }
+    catch(e){
+        console.log(e);
+    }
+
+        
+    }
 
 
     /**
@@ -47,7 +81,10 @@ export class blockTest implements ComponentFramework.StandardControl<IInputs, IO
      */
     public updateView(context: ComponentFramework.Context<IInputs>): void
     {
-        // Add code to update control view
+        ReactDOM.render(
+            React.createElement(MyReactComponent, {}), 
+            this._container
+            );
     }
 
     /**

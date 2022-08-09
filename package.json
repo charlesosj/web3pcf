@@ -10,7 +10,8 @@
     "refreshTypes": "pcf-scripts refreshTypes"
   },
   "dependencies": {
-    "@fluentui/react": "^8.87.0"
+    "@fluentui/react": "^8.87.0",
+    "wagmi": "^0.6.1"
   },
   "devDependencies": {
     "@types/node": "^16.4",
