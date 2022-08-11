@@ -15,16 +15,18 @@ declare var window: any
 
 
 interface IMyReactComponentProps {}
-const MyReactComponent: React.FC<IMyReactComponentProps> = () => {
+const MyReactComponent: React.FC<IMyReactComponentProps> = (props) => {
     const [currentAccount, setCurrentAccount] = useState('');
     // Add some state data propertie
     const [domain, setDomain] = useState('');
     const [record, setRecord] = useState('');
     const [network, setNetwork] = useState('');
-    const [mints, setMints] = useState([]);
+    const [rev, setMints] = useState([]);
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [events, setEvents] = useState([]);
+
+    const [reviews, setReviews] = useState([]);
+
     const connectWallet = async () => {
       try {
         const { ethereum } = window;
@@ -170,6 +172,30 @@ const MyReactComponent: React.FC<IMyReactComponentProps> = () => {
       }
     }
   
+
+    const getReviews = async () => {
+      try {
+        const { ethereum } = window;
+        if (ethereum) {
+          // You know all this
+          const provider = new ethers.providers.Web3Provider(ethereum);
+          const signer = provider.getSigner();
+          const contract = new ethers.Contract(CONTRACT_ADDRESS, contractAbi.abi, signer);
+  
+          // Get all the domain names from our contract
+         // const names = await contract.idToEvent();
+          contract.getReviews.call(0, function(err, result){
+            if(!err){
+               alert(result)
+            }
+        });
+          
+          //console.log(names);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     // This will run any time currentAccount or network are changed
     useEffect(() => {
       if (network === 'Polygon Mumbai Testnet') {
